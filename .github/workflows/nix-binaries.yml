@@ -1,0 +1,56 @@
+name: "DMRHost binaries"
+on:
+  pull_request:
+  push:
+    tags:
+    - 'v*'
+jobs:
+  build:
+    name: "build-nix-install-script"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v8
+    - uses: cachix/cachix-action@v6
+      with:
+        name: nixinstall-kexec
+        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+        # skipPush: true
+        # Only needed for private caches
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+    - run:
+        nix-build nix/default.nix -A dmrhost -o x86_64
+        nix-build nix/default.nix -A dmrhost_static -o x86_64-static-musl
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+         # This token is provided by Actions, you do not need to create your own token
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+              NIX install script Release
+        draft: false
+        prerelease: false
+    - name: Upload Release (Nix x86-64)
+      id: upload-release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./x86_64/bin/DMRHost
+        asset_name: DMRHost-x86_64-nix.bin
+        asset_content_type: application/octet-stream
+    - name: Upload Release (Linux-x86_64_static_musl)
+      id: upload-release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./x86_64-static-musl/bin/DMRHost
+        asset_name: DMRHost-x86_64-static-musl
+        asset_content_type: application/octet-stream
