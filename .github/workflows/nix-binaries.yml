@@ -20,9 +20,9 @@ jobs:
         # skipPush: true
         # Only needed for private caches
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run:
-        nix-build nix/default.nix -A dmrhost -o x86_64
-        nix-build nix/default.nix -A dmrhost_static -o x86_64-static-musl
+    - run: |      
+       nix-build nix/default.nix -A dmrhost -o x86_64
+       nix-build nix/default.nix -A dmrhost_static -o x86_64-static-musl
     - name: Create Release
       id: create_release
       uses: actions/create-release@latest
