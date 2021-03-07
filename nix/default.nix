@@ -1,5 +1,5 @@
 {
-  nixpkgs ? import /var2/nixpkgs {}
+  nixpkgs ? import <nixpkgs> {}
 }:
 let
   dmrhost = nixpkgs.callPackage ./DMRHost.nix {};
