@@ -34,8 +34,8 @@ jobs:
               NIX install script Release
         draft: false
         prerelease: false
-    - name: Upload Release (Nix x86-64)
-      id: upload-release
+    - name: Upload Release (Nix x86_64)
+      id: upload-release-x86_64
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,8 +44,8 @@ jobs:
         asset_path: ./x86_64/bin/DMRHost
         asset_name: DMRHost-x86_64-nix.bin
         asset_content_type: application/octet-stream
-    - name: Upload Release (Linux-x86_64_static_musl)
-      id: upload-release
+    - name: Upload Release (Linux-x86_64_static-musl)
+      id: upload-release-x86_64-static-musl
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
