@@ -33,7 +33,7 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
         body: |
-              NIX install script Release
+              DRMHost binaries
         draft: false
         prerelease: false
     - name: Upload Release (Nix x86_64)
