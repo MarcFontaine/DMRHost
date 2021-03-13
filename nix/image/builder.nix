@@ -10,6 +10,6 @@ set -u
 PS4=" $ "
 
 set -x
-exec env NIX_PATH="nixpkgs=${nixsrc}:nixos=${nixsrc}/nixos" nix-build \
+exec env -i NIX_PATH="nixpkgs=${nixsrc}:nixos=${nixsrc}/nixos" ${nixpkgs.nix}/bin/nix-build \
   system.nix -A config.system.build.sdImage "$@"
 ''
