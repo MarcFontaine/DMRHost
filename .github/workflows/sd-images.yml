@@ -21,8 +21,8 @@ jobs:
         # Only needed for private caches
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: |      
-       nix-build nix/default.nix -A builder -o builder
+       nix-build nix/default.nix -A builder -o build
        cd nix/image
-       ../../builder/bin/builder --argstr system armv6l-linux
-       ../../builder/bin/builder --argstr system armv7l-linux       
-       ../../builder/bin/builder --argstr system aarch64-linux
+       ../../build/bin/build --argstr system armv6l-linux
+       ../../build/bin/build --argstr system armv7l-linux       
+       ../../build/bin/build --argstr system aarch64-linux
