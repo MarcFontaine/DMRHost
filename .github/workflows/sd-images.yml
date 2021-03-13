@@ -22,7 +22,7 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: |      
        nix-build nix/default.nix -A builder -o builder
-       cd image
-       ../builder/bin/builder --argstr system armv6l-linux
-       ../builder/bin/builder --argstr system armv7l-linux       
-       ../builder/bin/builder --argstr system aarch64-linux
+       cd nix/image
+       ../../builder/bin/builder --argstr system armv6l-linux
+       ../../builder/bin/builder --argstr system armv7l-linux       
+       ../../builder/bin/builder --argstr system aarch64-linux
