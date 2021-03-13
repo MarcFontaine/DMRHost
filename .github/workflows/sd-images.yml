@@ -18,8 +18,6 @@ jobs:
         name: dmrhost-image
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY_DMRHOST_IMAGE }}'
         # skipPush: true
-        # Only needed for private caches
-        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: |      
        nix-build nix/default.nix -A builder -o build
        cd nix/image

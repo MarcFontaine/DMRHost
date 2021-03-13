@@ -17,7 +17,7 @@ jobs:
       with:
         name: dmrhost-binary
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY_DMRHOST_BINARY }}'
-     - run: |
+    - run: |
        nix-build nix/default.nix -A dmrhost -o x86_64
        nix-build nix/default.nix -A dmrhost_static -o x86_64-static-musl
     - name: Create Release
