@@ -6,8 +6,11 @@ on:
     - 'v*'
 jobs:
   build:
-    name: "image builder"
+    name: "Image Builder"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [armv6l-linux, armv7l-linux, aarch64-linux]
     steps:
     - uses: actions/checkout@v2
     - uses: cachix/install-nix-action@v12
@@ -21,6 +24,4 @@ jobs:
     - run: |      
        nix-build nix/default.nix -A builder -o build
        cd nix/image
-       ../../build/bin/build --argstr system armv6l-linux
-       ../../build/bin/build --argstr system armv7l-linux       
-       ../../build/bin/build --argstr system aarch64-linux
+       ../../build/bin/build --argstr system ${{ matrix.target }}
